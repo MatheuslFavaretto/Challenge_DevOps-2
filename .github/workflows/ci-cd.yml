@@ -45,7 +45,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: /home/${{ secrets.REMOTE_USER }}
-          EXCLUDE: "infra"
+          EXCLUDE: "aws"
           
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@master

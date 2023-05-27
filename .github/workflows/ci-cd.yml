@@ -49,7 +49,7 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PUBLIC_KEY }}
           port: 22
           script: |
             export SPRING_DATASOURCE_URL="${{ secrets.DATASOURCE_URL }}"

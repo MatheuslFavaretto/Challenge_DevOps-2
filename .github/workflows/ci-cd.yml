@@ -31,6 +31,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    needs: build
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -52,9 +54,7 @@ jobs:
           key: ${{ secrets.AWS_PUBLIC_KEY }}
           port: 22
           script: |
-            export SPRING_DATASOURCE_URL="${{ secrets.DATASOURCE_URL }}"
-            export SPRING_DATASOURCE_USERNAME="${{ secrets.DATASOURCE_USERNAME }}"
-            export SPRING_DATASOURCE_PASSWORD="${{ secrets.DATASOURCE_PASSWORD }}"
-            export PORT=8000
+            export PORT=8080
             chmod +x start.sh
-            nohup ./start.sh > nohup.out 2> nohup.err < /dev/null &
+            ./start.sh
+            nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://${{ secrets.DATASOURCE_URL }}/vollmed_api -DDATASOURCE_USERNAME=${{ secrets.DATASOURCE_PASSWORD }} -DDATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &

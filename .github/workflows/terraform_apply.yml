@@ -8,7 +8,7 @@ env:
 jobs:
   terraform:
     name: terraform
-    runs-on: amazon-linux-2
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install Terraform
-      run: sudo yum install -y terraform
+      run: sudo apt install terraform -y
 
     - name: Change to infra/aws directory
       run: cd infra/aws

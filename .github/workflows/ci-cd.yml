@@ -56,7 +56,7 @@ jobs:
           key: ${{ secrets.AWS_PUBLIC_KEY }}
           port: 22
           script: |
+            sudo yum update
+            sudo yum install maven git -y
             export PORT=8080
-            chmod +x start.sh
-            ./start.sh
             nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://${{ secrets.DATASOURCE_URL }}/vollmed_api -DDATASOURCE_USERNAME=${{ secrets.DATASOURCE_PASSWORD }} -DDATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &

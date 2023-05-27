@@ -20,8 +20,7 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 
 - Semana 1  [X] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
 - Semana 2  [X] Rotina CI/CD com github actions;
-- Semana 3  [] ;
-- Semana 4  [] .
+- Semana 3 e Semana 4  [] Monitoramento e SRE do sistema em produção;
 
 
 ## Semana 1
@@ -34,23 +33,6 @@ Serviços feitos da AWS criados pelo terraform:
 - 1 security group (dev e prod)
 - EC2 (com SO Amazon Linux)
 - RDS (com MySQL)
-
-
-## Na VM eu realizei os passos na seguinte ordem:
-
->   yum update
-
-
->   yum install maven git -y
-
-
->   git clone https://github.com/rcaneppele/2771-spring-boot.git
-
-
->   chmod -R 777 2771-spring-boot
-
-
->   cd 2771-spring-boot/
 
 
 ## para pular a parte de test
@@ -67,3 +49,8 @@ Serviços feitos da AWS criados pelo terraform:
 -   Criar Pipeline de CI/CD com Github Actions;  
 -   Realizar rotina de testes já presentes na API;
 
+
+
+## Semana 3 e 4 
+
+Em desenvolvimento...

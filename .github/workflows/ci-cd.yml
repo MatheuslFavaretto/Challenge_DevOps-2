@@ -43,8 +43,13 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}
+          TARGET: /home/api/${{ secrets.REMOTE_USER }}
           EXCLUDE: "infra"
+        with:
+          args: |
+            rm -rf /home/api/${{ secrets.REMOTE_USER }}/old_folder
+            mv /home/api/${{ secrets.REMOTE_USER }}/new_folder /home/api/${{ secrets.REMOTE_USER }}/old_folder
+            mkdir /home/api/${{ secrets.REMOTE_USER }}/new_folder
           
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@master

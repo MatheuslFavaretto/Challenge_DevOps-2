@@ -18,12 +18,12 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 
 ## ⚙️ Funcionalidades
 
-- Semana 1  [X] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
-- Semana 2  [X] Rotina CI/CD com github actions;
-- Semana 3 e Semana 4  [] Monitoramento e SRE do sistema em produção;
+- Semana 1      [X] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
+- Semana 2      [X] Rotina CI/CD com github actions;
+- Semana 3/4    [] Monitoramento e SRE do sistema em produção;
 
 
-## Semana 1
+### Semana 1 IaC
 
 Serviços feitos da AWS criados pelo terraform:
 
@@ -44,13 +44,13 @@ Serviços feitos da AWS criados pelo terraform:
 >   java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://<url-db>/vollmed_api -DDATASOURCE_USERNAME=<nomedb> -DDATASOURCE_PASSWORD=<senhadb> -jar target/api-0.0.1-SNAPSHOT.jar
 
 
-## Semana 2
+### Semana 2 CI/CD
 
 -   Criar Pipeline de CI/CD com Github Actions;  
 -   Realizar rotina de testes já presentes na API;
 
 
 
-## Semana 3 e 4 
+### Semana 3 e 4 Monitoramento e SRE
 
 Em desenvolvimento...

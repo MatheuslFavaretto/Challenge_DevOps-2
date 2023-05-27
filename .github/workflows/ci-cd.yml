@@ -57,7 +57,7 @@ jobs:
           script: |
             yum update -y
             sudo pkill java
-            sudo yum install java maven
+            sudo yum install java maven -y
             mvn clean install
             export PORT=8080
             nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://${{ secrets.DATASOURCE_URL }}/vollmed_api -DDATASOURCE_USERNAME=${{ secrets.DATASOURCE_PASSWORD }} -DDATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &

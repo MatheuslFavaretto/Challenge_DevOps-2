@@ -43,7 +43,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/api/${{ secrets.REMOTE_USER }}
+          TARGET: /home/${{ secrets.REMOTE_USER }}
           EXCLUDE: "infra"
           
       - name: Execute remote SSH commands using password

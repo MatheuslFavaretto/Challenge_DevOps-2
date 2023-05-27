@@ -38,20 +38,22 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Deploy to Staging server
-        uses: easingthemes/ssh-deploy@main
+        uses: easingthemes/ssh-deploy@v2.1.5
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: /home/${{ secrets.REMOTE_USER }}
           EXCLUDE: "infra"
+          DELETE_FLAG: "true"
+          ARGS: "-avz --delete"  # Adicione essa linha para excluir a pasta antiga antes de copiar os arquivos
           
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.AWS_PUBLIC_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             export PORT=8080

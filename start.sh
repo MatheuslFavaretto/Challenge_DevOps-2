@@ -1,27 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-# Atualizar pacotes
-sudo yum update -y
-
-# Instalar Maven e Git
-sudo yum install maven git -y
-
-# Clone repositorio
-
-sudo git clone https://github.com/rcaneppele/2771-spring-boot.git
-
-# permissao
-
-sudo chmod -R 777 2771-spring-boot
-
-#intrando nos arquivos
-
-cd 2771-spring-boot/
-
-# Compilar o projeto (pulando os testes)
+pkill java
+sudo rm -rf api
+git clone https://github.com/rcaneppele/2771-spring-boot.git api && cd api
 mvn clean package -DskipTests
-
-# Executar o projeto em ambiente de produção
-
-java  -jar target/api-0.0.1-SNAPSHOT.jar
-
+nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://dev-db.c69d0zwlxyuz.us-east-1.rds.amazonaws.com/vollmed_api -DDATASOURCE_USERNAME=sysadmin -DDATASOURCE_PASSWORD=123456789 -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &

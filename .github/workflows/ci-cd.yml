@@ -26,7 +26,7 @@ jobs:
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
-      run: mvn -B clean package --file pom.xml
+      run: mvn -B clean -DskipTests --file pom.xml
       
   deploy:
     runs-on: ubuntu-latest

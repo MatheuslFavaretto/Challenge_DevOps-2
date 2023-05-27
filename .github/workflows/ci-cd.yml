@@ -43,7 +43,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/infra${{ secrets.REMOTE_USER }}
+          TARGET: /home/${{ secrets.REMOTE_USER }}
           EXCLUDE: "infra"
           DELETE_FLAG: "true"
           ARGS: "-avz --delete"  # Adicione essa linha para excluir a pasta antiga antes de copiar os arquivos

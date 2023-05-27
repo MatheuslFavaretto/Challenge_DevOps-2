@@ -48,7 +48,7 @@ jobs:
           EXCLUDE: "infra"
           
       - name: Execute remote SSH commands using password
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}

@@ -7,7 +7,7 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 | 🪟 Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | **Challenge DevOps**
-| 💻 Tecnologias | java, terraform, ansible, CI/DC
+| 💻 Tecnologias | java, terraform, CI/DC
 | :rocket: URL         |
 | :fire: Desafio     | [Challenge DevOps 2]([https://](https://www.alura.com.br/challenges/devops-2))
 

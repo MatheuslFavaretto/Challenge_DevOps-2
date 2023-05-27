@@ -1,0 +1,35 @@
+name: Entrega contínua
+
+on:
+  workflow_call:
+
+jobs:
+  EC2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Deploy to Staging server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: /home/${{ secrets.REMOTE_USER }}
+          EXCLUDE: "infra"
+          
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            export SPRING_DATASOURCE_URL="${{ secrets.DATASOURCE_URL }}"
+            export SPRING_DATASOURCE_USERNAME="${{ secrets.DATASOURCE_USERNAME }}"
+            export SPRING_DATASOURCE_PASSWORD="${{ secrets.DATASOURCE_PASSWORD }}"
+            export PORT=8000
+            chmod +x start.sh
+            nohup ./start.sh > nohup.out 2> nohup.err < /dev/null &

@@ -18,13 +18,13 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 
 ## ⚙️ Funcionalidades
 
-- Semana 1  [x] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
-- Semana 2  [] ;
+- Semana 1  [X] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
+- Semana 2  [X] Rotina CI/CD com github actions;
 - Semana 3  [] ;
 - Semana 4  [] .
 
 
-## semana 1
+## Semana 1
 
 Serviços feitos da AWS criados pelo terraform:
 
@@ -34,7 +34,6 @@ Serviços feitos da AWS criados pelo terraform:
 - 1 security group (dev e prod)
 - EC2 (com SO Amazon Linux)
 - RDS (com MySQL)
-
 
 
 ## Na VM eu realizei os passos na seguinte ordem:
@@ -61,3 +60,10 @@ Serviços feitos da AWS criados pelo terraform:
 ## indo direto a produção 
 
 >   java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://<url-db>/vollmed_api -DDATASOURCE_USERNAME=<nomedb> -DDATASOURCE_PASSWORD=<senhadb> -jar target/api-0.0.1-SNAPSHOT.jar
+
+
+## Semana 2
+
+-   Criar Pipeline de CI/CD com Github Actions;  
+-   Realizar rotina de testes já presentes na API;
+

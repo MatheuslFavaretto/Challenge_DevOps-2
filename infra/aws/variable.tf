@@ -43,8 +43,7 @@ variable "subnetsg" {
 variable "name_db" {
   description = "Nome do banco de dados"
   type        = string
-  default     = "aluraflix"
-  sensitive   = true
+  default     = "vollmed_api"
 }
 
 variable "username" {

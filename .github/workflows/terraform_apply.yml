@@ -13,17 +13,17 @@ jobs:
       run:
         shell: bash
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Install Terraform
-      run: sudo apt install terraform -y
+      - name: Install Terraform
+        run: sudo snap install terraform --classic
 
-    - name: Change to infra/aws directory
-      run: cd infra/aws
+      - name: Change to infra/aws directory
+        run: cd infra/aws
 
-    - name: Terraform Init
-      run: terraform init
+      - name: Terraform Init
+        run: terraform init
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve

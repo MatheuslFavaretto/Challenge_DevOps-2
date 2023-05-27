@@ -40,11 +40,24 @@ Serviços feitos da AWS criados pelo terraform:
 ## Na VM eu realizei os passos na seguinte ordem:
 
 >   yum update
+
+
 >   yum install maven git -y
+
+
 >   git clone https://github.com/rcaneppele/2771-spring-boot.git
+
+
 >   chmod -R 777 2771-spring-boot
+
+
 >   cd 2771-spring-boot/
+
+
 ## para pular a parte de test
+
 >   mvn clean package -DskipTests ## para pular a parte de test
+
 ## indo direto a produção 
+
 >   java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://<url-db>/vollmed_api -DDATASOURCE_USERNAME=<nomedb> -DDATASOURCE_PASSWORD=<senhadb> -jar target/api-0.0.1-SNAPSHOT.jar

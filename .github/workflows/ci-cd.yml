@@ -26,7 +26,7 @@ jobs:
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
-      run: mvn -B clean -DskipTests --file pom.xml
+      run: mvn -B clean -DskipTests
       
   deploy:
     runs-on: ubuntu-latest
@@ -35,10 +35,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
-      - name: Build with Maven
-        run: mvn -B clean package -DskipTests --file pom.xml 
-        
+
       - name: Deploy DEV on AWS
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PUBLIC_KEY  }}

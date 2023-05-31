@@ -1,0 +1,49 @@
+---
+- name: Atualizar, instalar pacotes e configurar Docker no Amazon Linux
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Atualizar o sistema
+      dnf:
+        name: '*'
+        state: latest
+
+    - name: Instalar o Maven
+      dnf:
+        name: maven
+        state: present
+
+    - name: Instalar o Git
+      dnf:
+        name: git
+        state: present
+
+    - name: Adicionar exceção para o diretório /home/ec2-user/app no Git
+      command: git config --global --add safe.directory /home/ec2-user/app
+
+- name: Meu playbook Docker
+  collections:
+    - community.docker
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Pull da imagem do MySQL Docker
+      shell: sudo docker pull matheuslfavaretto/db_mysql:v1
+
+    - name: Adicionar usuário ao grupo "docker"
+      shell: sudo usermod -aG docker $USER
+
+
+    - name: Executar contêiner MySQL
+      community.docker.docker_container:
+        name: mysql_container
+        image: matheuslfavaretto/db_mysql:v1
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        detach: yes
+        state: started
+
+    - name: Pull db
+      shell: docker pull matheuslfavaretto/db_mysql:v1
+
+

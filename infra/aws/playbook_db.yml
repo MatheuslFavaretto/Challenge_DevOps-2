@@ -1,0 +1,24 @@
+---
+- name: Atualizar, instalar pacotes e configurar Docker no Amazon Linux
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Pull docker
+      shell: docker pull mysql
+      become: true
+
+    - name: Iniciando docker
+      shell: docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=root -d mysql
+      become: true
+
+    - name: entrando no servidor
+      shell: docker exec -it mysql-server mysql -uroot -p
+      sql: |
+      CREATE TABLE tabela2 (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        descricao VARCHAR(100),
+        preco DECIMAL(10,2)
+      )
+
+
+

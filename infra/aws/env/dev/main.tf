@@ -6,11 +6,3 @@ module "dev" {
   ambiante = "desenvolvimento"
 
 }
-
-output "public_ip" {
-  value = module.dev.ip
-}
-
-output "private_ip" {
-  value = module.dev.ip
-}

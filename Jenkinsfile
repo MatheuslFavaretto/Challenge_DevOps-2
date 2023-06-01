@@ -7,7 +7,6 @@ pipeline {
         DOCKERHUB_PASSWORD = credentials('DOCKERHUB_PASSWORD')
         BRANCH_NAME = credentials('BRANCH_NAME')
         AWS_KEY = credentials('AWS_KEY')
-        AWS_KEY_PUB = credentials('AWS_KEY_PUB')
         ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
         BRANCH = "${env.BRANCH_NAME}"
     }
@@ -25,9 +24,6 @@ pipeline {
                 withCredentials([string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE')]) {
                     writeFile file: 'infra/aws/env/dev/aws-key', text: "${AWS_KEY_VALUE}"
                 }
-                withCredentials([string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')]) {
-                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: "${AWS_KEY_PUB_VALUE}"
-                }
             }
         }
 
@@ -35,7 +31,8 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'chmod 400 aws-key'
+                        sh 'sudo ssh-keygen -y -f aws-key > aws-key.pub -t rsa -b 4096'
+                        sh 'chmod 600 infra/aws/env/dev/aws-key'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }

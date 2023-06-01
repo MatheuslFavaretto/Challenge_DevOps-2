@@ -54,7 +54,6 @@ pipeline {
                                 "ANSIBLE_PRIVATE_KEY_PATH=/caminho/para/a/chave/aws-key.pem"]) {
                             
                             // Executar o playbook do Ansible para se conectar à instância EC2
-                            sh 'ansible-playbook -i inventory/ec2.yml playbook.yml'
                             sh 'ansible-playbook -i hosts.yml -u ec2-user master.yml'
                         }
                     }

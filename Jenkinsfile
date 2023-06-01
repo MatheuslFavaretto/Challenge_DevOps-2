@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
@@ -21,25 +22,21 @@ pipeline {
 
         stage('Criar Arquivo de Credenciais') {
             steps {
-                withCredentials([string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE')]) {
-                    writeFile file: 'infra/aws/env/dev/aws-key', text: "${AWS_KEY_VALUE}"
+                withCredentials([
+                    string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE'),
+                    string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')
+                ]) {
+                    sh 'echo $AWS_KEY_VALUE > infra/aws/env/dev/aws-key'
+                    sh 'echo $AWS_KEY_PUB_VALUE > infra/aws/env/dev/aws-key.pub'
                 }
             }
-                withCredentials([string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')]) {
-                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: "${AWS_KEY_PUB_VALUE}"
-                }
-            }
-
-    }
-       
-
+        }
 
         stage('Criação ou Atualização da Infraestrutura') {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'sudo ssh-keygen -y -f aws-key > aws-key.pub'
-                        sh 'chmod 600 infra/aws/env/dev/aws-key'
+                        sh 'chmod 600 aws-key'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
@@ -61,7 +58,7 @@ pipeline {
         stage('Wait') {
             steps {
                 script {
-                    sleep time: 300, unit: 'SECONDS'
+                    sleep(time: 300, unit: 'SECONDS')
                 }
             }
         }
@@ -74,7 +71,6 @@ pipeline {
                     }
                 }
             }
-
             steps {
                 script {
                     dir('infra/aws/env/dev/') {

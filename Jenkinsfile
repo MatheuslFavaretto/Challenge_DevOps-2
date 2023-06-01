@@ -6,8 +6,6 @@ pipeline {
         DOCKERHUB_USERNAME = credentials('DOCKERHUB_USERNAME')
         DOCKERHUB_PASSWORD = credentials('DOCKERHUB_PASSWORD')
         BRANCH_NAME = credentials('BRANCH_NAME')
-        AWS_KEY = credentials('AWS_KEY')
-        AWS_KEY_PUB = credentials('AWS_KEY_PUB')
         ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
         BRANCH = "${env.BRANCH_NAME}"
     }
@@ -19,19 +17,18 @@ pipeline {
             }
         }
 
-        stage('Create Credential File') {
+        stage('Criar Arquivo de Credenciais') {
             steps {
-                script {
-                    def awsKey = credentials('AWS_KEY')
-                    writeFile file: 'infra/aws/env/dev/aws-key', text: awsKey
-                    def awsKeypub = credentials('AWS_KEY_PUB')
-                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: awsKeypub
+                withCredentials([string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE')]) {
+                    writeFile file: 'infra/aws/env/dev/aws-key', text: "${AWS_KEY_VALUE}"
+                }
+                withCredentials([string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')]) {
+                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: "${AWS_KEY_PUB_VALUE}"
                 }
             }
         }
 
-
-        stage('Infrastructure Creation or Update') {
+        stage('Criação ou Atualização da Infraestrutura') {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
@@ -42,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Infrastructure Destroy') {
+        stage('Destruir Infraestrutura') {
             when {
                 not {
                     expression {

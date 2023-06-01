@@ -6,6 +6,8 @@ pipeline {
         DOCKERHUB_USERNAME = credentials('DOCKERHUB_USERNAME')
         DOCKERHUB_PASSWORD = credentials('DOCKERHUB_PASSWORD')
         BRANCH_NAME = credentials('BRANCH_NAME')
+        AWS_KEY = credentials('AWS_KEY')
+        AWS_KEY_PUB = credentials('AWS_KEY_PUB')
         ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
         BRANCH = "${env.BRANCH_NAME}"
     }
@@ -16,6 +18,18 @@ pipeline {
                 git url: 'https://github.com/MatheuslFavaretto/Challenge_DevOps.git', branch: 'main'
             }
         }
+
+        stage('Create Credential File') {
+            steps {
+                script {
+                    def awsKey = credentials('AWS_KEY')
+                    writeFile file: 'infra/aws/env/dev/aws-key', text: awsKey
+                    def awsKeypub = credentials('AWS_KEY_PUB')
+                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: awsKeypub
+                }
+            }
+        }
+
 
         stage('Infrastructure Creation or Update') {
             steps {
@@ -44,12 +58,6 @@ pipeline {
                         sh 'terraform destroy -auto-approve'
                     }
                 }
-            }
-        }
-
-        stage('Slack Notification End') {
-            steps {
-                slackSend(message: "Pipeline ${env.BRANCH_NAME} foi finalizada", sendAsText: true)
             }
         }
     }

@@ -12,5 +12,5 @@ output "public_ip" {
 }
 
 output "private_ip" {
-  value = module.dev.private_i´
+  value = module.dev.private_ip
 }

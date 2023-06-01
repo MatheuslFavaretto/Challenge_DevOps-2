@@ -10,12 +10,12 @@ pipeline {
         BRANCH = "${env.BRANCH_NAME}"
     }
 
+    stages {
         stage('Checkout Source') {
             steps {
                 git url: 'https://github.com/MatheuslFavaretto/Challenge_DevOps.git', branch: 'main'
             }
         }
-
 
         stage('Infrastructure Creation or Update') {
             steps {

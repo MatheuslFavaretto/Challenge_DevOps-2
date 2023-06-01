@@ -25,10 +25,4 @@ resource "null_resource" "create_ansible_hosts" {
   }
 }
 
-resource "null_resource" "generate_ssh_key" {
-  provisioner "local-exec" {
-    command = "sudo ssh-keygen -y -f aws-key > aws-key.pub"
-  }
-}
-
 

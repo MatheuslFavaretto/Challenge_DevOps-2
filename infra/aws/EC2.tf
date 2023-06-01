@@ -1,8 +1,6 @@
 resource "aws_key_pair" "key" {
   key_name   = "aws-key"
   public_key = file("./aws-key.pub")
-
-   depends_on = [null_resource.generate_ssh_key]
 }
 
 module "ec2_instance" {
@@ -19,7 +17,6 @@ module "ec2_instance" {
   subnet_ids             = module.vpc.public_subnets
   vpc_security_group_ids = [aws_security_group.sg-dev.id]
 
-    depends_on = [ aws_key_pair.key ]
 }
 
 

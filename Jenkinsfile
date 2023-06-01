@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
-                git url: 'https://github.com/MatheuslFavaretto/Challenge_DevOps.git', branch: 'main'
+                git url: 'https://github.com/MatheuslFavaretto/dev-test.git', branch: 'main'
             }
         }
 
@@ -32,10 +32,8 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'ls'
-                        sh 'pwd'
-                        sh 'cat aws-key'
-                        sh 'ls -al'
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
                     }
                 }
             }

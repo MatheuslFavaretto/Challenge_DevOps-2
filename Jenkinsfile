@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'sudo ssh-keygen -y -f aws-key > aws-key.pub -t rsa -b 4096'
+                        sh 'sudo ssh-keygen -y -f aws-key.pub -t rsa -b 4096'
                         sh 'chmod 600 infra/aws/env/dev/aws-key'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'

@@ -22,10 +22,6 @@ pipeline {
                 withCredentials([string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE')]) {
                     writeFile file: 'infra/aws/env/dev/aws-key', text: "${AWS_KEY_VALUE}"
                 }
-                withCredentials([string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')]) {
-                    writeFile file: 'infra/aws/env/dev/aws-key.pub', text: "${AWS_KEY_PUB_VALUE}"
-                }
-            }
         }
 
         stage('Criação ou Atualização da Infraestrutura') {
@@ -33,6 +29,7 @@ pipeline {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
                         sh 'chmod 400 aws-key'
+                        sh 'ssh-keygen -y -f aws-key > aws-key.pub'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
@@ -46,8 +43,16 @@ pipeline {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
                         sh 'export ANSIBLE_HOST_KEY_CHECKING=False'
                         sh 'ansible-playbook master.yml -u ec2-user --private-key aws-key -i hosts.yml'
-                        }                
                     }
+                }
+            }
+        }
+
+        stage('Wait') {
+            steps {
+                script {
+                    sleep time: 300, unit: 'SECONDS'
+                }
             }
         }
 

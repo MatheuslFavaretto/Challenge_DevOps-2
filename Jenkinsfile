@@ -32,10 +32,22 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
+                        sh 'chmod 400 aws-key'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
                 }
+            }
+        }
+
+        stage('Executando Ansible') {
+            steps {
+                script {
+                    dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
+                        sh 'export ANSIBLE_HOST_KEY_CHECKING=False'
+                        sh 'ansible-playbook master.yml -u ec2-user --private-key aws-key -i hosts.yml'
+                        }                
+                    }
             }
         }
 

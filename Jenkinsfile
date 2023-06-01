@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        DOCKERHUB_USERNAME = credentials('DOCKERHUB_USERNAME')
+        DOCKERHUB_PASSWORD = credentials('DOCKERHUB_PASSWORD')
+        BRANCH_NAME = credentials('BRANCH_NAME')
+        ENV = "${env.BRANCH_NAME == 'master' ? 'PROD' : 'DEV'}"
+        BRANCH = "${env.BRANCH_NAME}"
+    }
+
+        stage('Checkout Source') {
+            steps {
+                git url: 'https://github.com/MatheuslFavaretto/Challenge_DevOps.git', branch: 'main'
+            }
+        }
+
+
+        stage('Infrastructure Creation or Update') {
+            steps {
+                script {
+                    dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
+
+        stage('Infrastructure Destroy') {
+            when {
+                not {
+                    expression {
+                        return env.ENV == 'PROD'
+                    }
+                }
+            }
+
+            steps {
+                script {
+                    dir('infra/aws/env/dev/') {
+                        sh 'terraform init'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
+            }
+        }
+
+        stage('Slack Notification End') {
+            steps {
+                slackSend(message: "Pipeline ${env.BRANCH_NAME} foi finalizada", sendAsText: true)
+            }
+        }
+    }
+}

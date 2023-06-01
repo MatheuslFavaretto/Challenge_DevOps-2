@@ -1,9 +1,12 @@
-variable "nome_repositorio" {
-  type = string
-}
-
-
 variable "ambiante" {
   type = string
-
 }
+
+variable "ami" {
+  type = string
+}
+
+variable "instance" {
+  type = string
+}
+

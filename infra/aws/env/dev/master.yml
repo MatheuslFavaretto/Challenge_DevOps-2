@@ -1,0 +1,76 @@
+- name: Atualizar, instalar pacotes e configurar Docker no Amazon Linux
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Atualizar o sistema
+      dnf:
+        name: '*'
+        state: latest
+
+    - name: Instalar o Maven
+      dnf:
+        name: maven
+        state: present
+
+    - name: Instalar o Git
+      dnf:
+        name: git
+        state: present
+
+    - name: Instalar o Docker
+      shell: yum install docker -y
+
+    - name: Iniciar e habilitar o serviço do Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+
+- name: Iniciando o Docker
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Pull da imagem do MySQL Docker
+      shell: docker pull matheuslfavaretto/db_mysql:v1
+
+    - name: mysql_container
+      shell: docker run -d -p 3306:3306 matheuslfavaretto/db_mysql:v1
+
+
+- name: Executar comandos no servidor
+  hosts: web-server
+  become: yes
+  tasks:
+    - name: Parar processos Java
+      command: pkill java
+      ignore_errors: yes
+
+    - name: Remover diretório 'api'
+      command: rm -rf api
+      ignore_errors: yes
+
+    - name: Clonar repositório do GitHub
+      git:
+        repo: https://github.com/MatheuslFavaretto/dev-test.git
+        dest: api
+        version: main
+      register: git_output
+
+    - name: Dar permissão 777 na pasta 'api'
+      file:
+        path: api
+        mode: '0777'
+
+    - name: Navegar até o diretório 'api'
+      shell: cd api
+
+    - name: Executar 'mvn clean package -DskipTests'
+      command: mvn clean package -DskipTests
+      args:
+        chdir: api
+
+    - name: Executar o app
+      command: nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 && disown
+      args:
+        chdir: api

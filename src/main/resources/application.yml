@@ -20,7 +20,7 @@ api.security:
   token.secret: ${JWT_SECRET:12345678}
 
 # Configuração do servidor
-server.port: 8081
+server.port: 8080
 
 # Configuração do Actuator
 management:

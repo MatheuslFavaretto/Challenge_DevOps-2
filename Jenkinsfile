@@ -33,7 +33,9 @@ pipeline {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
                         sh 'ls'
-                        sh 'terraform apply -auto-approve'
+                        sh 'pwd'
+                        sh 'cat aws-key'
+                        sh 'ls -al'
                     }
                 }
             }

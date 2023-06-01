@@ -24,3 +24,4 @@ resource "null_resource" "create_ansible_hosts" {
     EOT
   }
 }
+

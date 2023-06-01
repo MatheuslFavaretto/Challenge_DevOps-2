@@ -22,6 +22,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE')]) {
                     writeFile file: 'infra/aws/env/dev/aws-key', text: "${AWS_KEY_VALUE}"
                 }
+            }
         }
 
         stage('Criação ou Atualização da Infraestrutura') {

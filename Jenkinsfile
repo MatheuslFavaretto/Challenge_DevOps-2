@@ -48,8 +48,7 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'export ANSIBLE_HOST_KEY_CHECKING=False'
-                        sh 'ansible-playbook master.yml -u ec2-user --private-key aws-key -i hosts.yml'
+                        sh 'export ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook master.yml -u ec2-user --private-key aws-key -i hosts.yml'
                     }
                 }
             }

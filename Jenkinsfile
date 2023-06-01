@@ -29,8 +29,10 @@ pipeline {
                     writeFile file: 'infra/aws/env/dev/aws-key.pub', text: "${AWS_KEY_PUB_VALUE}"
                 }
             }
-        }
-        }
+
+    }
+       
+
 
         stage('Criação ou Atualização da Infraestrutura') {
             steps {

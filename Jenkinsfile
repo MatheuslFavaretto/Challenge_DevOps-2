@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'chmod 600 aws-key'
+                        sh 'chmod 400 aws-key'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }

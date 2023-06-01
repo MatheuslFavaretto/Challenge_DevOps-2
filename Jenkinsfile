@@ -15,6 +15,7 @@ pipeline {
         stage('Checkout Source') {
             steps {
                 git url: 'https://github.com/MatheuslFavaretto/dev-test.git', branch: 'main'
+                sh 'chmod -R 777 dev-test/'
             }
         }
 

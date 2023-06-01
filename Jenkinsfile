@@ -32,8 +32,8 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'sudo terraform init'
+                        sh 'sudo terraform apply -auto-approve'
                     }
                 }
             }

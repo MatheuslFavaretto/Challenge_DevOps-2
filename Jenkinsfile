@@ -37,6 +37,7 @@ pipeline {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
                         sh 'chmod 600 aws-key'
+                        sh 'ansible --version'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }

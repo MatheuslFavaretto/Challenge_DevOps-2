@@ -26,7 +26,7 @@ pipeline {
                     string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE'),
                     string(credentialsId: 'AWS_KEY_PUB', variable: 'AWS_KEY_PUB_VALUE')
                 ]) {
-                    sh 'echo $AWS_KEY_VALUE > infra/aws/env/dev/aws-key'
+                    sh 'echo $AWS_KEY_VALUE > infra/aws/env/dev/aws-key.pem'
                     sh 'echo $AWS_KEY_PUB_VALUE > infra/aws/env/dev/aws-key.pub'
                 }
             }
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'chmod 600 aws-key'
+                        sh 'chmod 600 aws-key.pem'
                         sh 'ansible --version'
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
@@ -44,16 +44,32 @@ pipeline {
                 }
             }
         }
-
         stage('Executando Ansible') {
             steps {
                 script {
-                    dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
-                        sh 'export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i hosts.yml -u ec2-user --private-key aws-key master.yml'
+                    // Defina o diretório de trabalho do Ansible
+                    dir('infra/aws/env/dev/') {
+                        // Configurar as variáveis de ambiente necessárias para a conexão SSH
+                        withEnv(["ANSIBLE_HOST_KEY_CHECKING=False",
+                                "ANSIBLE_PRIVATE_KEY_PATH=/caminho/para/a/chave/aws-key.pem"]) {
+                            
+                            // Executar o playbook do Ansible para se conectar à instância EC2
+                            sh 'ansible-playbook -i inventory/ec2.yml playbook.yml'
+                            sh 'ansible-playbook -i hosts.yml -u ec2-user master.yml'
+                        }
                     }
                 }
             }
-        }
+    }
+//        stage('Executando Ansible') {
+//            steps {
+//                script {
+//                    dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
+//                        sh 'export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i hosts.yml -u ec2-user --private-key aws-key master.yml'
+//                    }
+//                }
+//            }
+//        }
 
 
         stage('Wait') {

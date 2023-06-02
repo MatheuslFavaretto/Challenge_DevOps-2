@@ -27,7 +27,7 @@
         enabled: yes
 
 
-- name: Iniciando o Docekr
+- name: Iniciando o Docker
   hosts: web-server
   become: true
   tasks:
@@ -38,41 +38,48 @@
       shell: docker run -d -p 3306:3306 matheuslfavaretto/db_mysql:v1
 
 
-    - name: Executar comandos no servidor
-      hosts: web-server
-      become: yes
-
-
-- name: Iniciando o Docekr
+- name: Executar comandos no servidor
   hosts: web-server
-  become: true
+  become: yes
   tasks:
     - name: Parar processos Java
       command: pkill java
       ignore_errors: yes
 
-        - name: Remover diretório 'api'
-          command: rm -rf api
-          ignore_errors: yes
+    - name: Remover diretório 'api'
+      command: rm -rf api
+      ignore_errors: yes
 
-        - name: Clonar repositório do GitHub
-          git:
-            repo: https://github.com/MatheuslFavaretto/dev-test.git
-            dest: api
-            version: main
-          register: git_output
+    - name: Clonar repositório do GitHub
+      git:
+        repo: https://github.com/MatheuslFavaretto/dev-test.git
+        dest: api
+        version: main
+      register: git_output
 
-        - name: Dar permissão 777 na pasta 'api'
-          file:
-            path: api
-            mode: '0777'
+    - name: Dar permissão 777 na pasta 'api'
+      file:
+        path: api
+        mode: '0777'
 
-        - name: Navegar até o diretório 'api'
-          shell: cd api
+    - name: Navegar até o diretório 'api'
+      shell: cd api
 
-        - name: Executar 'mvn clean package -DskipTests'
-          command: mvn clean package -DskipTests
-          args:
-            chdir: api
+    - name: Executar 'mvn clean package -DskipTests'
+      command: mvn clean package -DskipTests
+      args:
+        chdir: api
+
+    - name: permissão para o run.sh
+      command: chmod +x startup.sh
+      become: yes
+      args:
+        chdir: api
+
+    - name: executar startup.sh
+      command: sudo ./startup.sh
+      become: yes
+      args:
+        chdir: api
 
 

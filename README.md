@@ -16,7 +16,7 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 
 ## 📃 Detalhes do projeto
 
--   Na branch 'Main' está o projeto finalizado com a rotina CI/CD no Jenkins. Nesse ambiente, as etapas declarativas incluem: Checkout SCM, Checkout Source, Build Docker Image - DB, Push to Docker Hub, Create Credentials File, Create or Update Infrastructure, Run Ansible, Wait e Destroy Infrastructure. Foi utilizado Infrastructure as Code (IaC) com Terraform, utilizando módulos remotos, para criar a infraestrutura na AWS e implantar uma instância EC2. Além disso, foi implementada a integração com o Slack para notificações durante a rotina CI/CD.
+-   Na branch 'main' está o projeto finalizado com a rotina CI/CD no Jenkins. Nesse ambiente, as etapas declarativas incluem: Checkout SCM, Checkout Source, Build Docker Image - DB, Push to Docker Hub, Create Credentials File, Create or Update Infrastructure, Run Ansible, Wait e Destroy Infrastructure. Foi utilizado Infrastructure as Code (IaC) com Terraform, utilizando módulos remotos, para criar a infraestrutura na AWS e implantar uma instância EC2. Além disso, foi implementada a integração com o Slack para notificações durante a rotina CI/CD.
 
     Caso a pipeline seja executada como ambiente de desenvolvimento (DEV), a infraestrutura criada pela IaC será destruída após a conclusão da pipeline. No entanto, caso seja executada como ambiente de produção (PROD), o ambiente não será destruído automaticamente, permitindo a continuidade do ambiente para produção.
 
@@ -53,7 +53,12 @@ Serviços feitos da AWS criados pelo Terraform:
 -   Utilizei Grafana para visualizar métricas coletadas;
 -   Utilizei o docker-compose para usbir o Prometheus eo Grafana;
 
- ## Grafana Dashboard:
+
+## Jenkins CI/CD:
+
+![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/644e6ba8-a3a3-49bd-8549-6063d3d5789c)
+
+## Grafana Dashboard:
 
 ![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/e6f87c7c-1d98-4da2-8031-74ff3bfc8d0b)
 
@@ -63,6 +68,7 @@ Serviços feitos da AWS criados pelo Terraform:
 
 ## Slack:
 ![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/e888be85-3ac8-48c1-af8f-7954d16805ef)
+
  
 -----
 

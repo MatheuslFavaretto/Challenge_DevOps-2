@@ -1,7 +1,7 @@
-resource "aws_db_instance" "api_db_test" {
-  identifier             = "${lower(replace(var.name, " ", "-"))}-db-test"
+resource "aws_db_instance" "api_db" {
+  identifier             = "${lower(replace(var.name, " ", "-"))}-db"
   allocated_storage      = var.allocated_storage
-  db_name                = var.name_db_test
+  db_name                = var.name_db
   engine                 = var.engine
   engine_version         = var.engine_version
   instance_class         = var.instance_class

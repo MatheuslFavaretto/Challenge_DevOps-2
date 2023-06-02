@@ -107,10 +107,3 @@ variable "skip_final_snapshot" {
   type        = bool
   default     = true
 }
-
-variable "name_db_test" {
-  description = "Nome do banco de dados de teste"
-  type        = string
-  default     = "vollmed_api_test"
-
-}

@@ -1,5 +1,12 @@
 management:
   endpoints:
+    enabled-by-default: false
     web:
       exposure:
-        include: 'health, metrics'
+        include: 'health,prometheus'
+  endpoint:
+    health:
+      enable: true
+      show-details: always
+    prometheus:
+      enabled:  true

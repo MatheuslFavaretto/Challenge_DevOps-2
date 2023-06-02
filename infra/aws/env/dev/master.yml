@@ -75,3 +75,9 @@
       args:
         chdir: api
 
+    - name: executar run.sh
+      command: ./run.sh
+      args:
+        chdir: api
+
+

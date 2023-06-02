@@ -20,10 +20,9 @@ pipeline {
             }
         }
     
-        stage('Build Imagem Docker DB') {
+        stage('Build Docker Image - DB') {
             steps {
-                script {
-                    dir ('infra/db_mysql/')
+                dir('infra/db_mysql/') {
                     sh 'sudo docker build -t matheuslfavaretto/db_mysql:v1 .'
                 }
             }
@@ -32,16 +31,15 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    dir ('infra/db_mysql/')
-                    sh "echo ${DOCKERHUB_PASSWORD} | sudo docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
-                    sh 'sudo docker push matheuslfavaretto/db_mysql:v1'
+                    dir('infra/db_mysql/') {
+                        sh "echo ${DOCKERHUB_PASSWORD} | sudo docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
+                        sh 'sudo docker push matheuslfavaretto/db_mysql:v1'
+                    }
                 }
             }
         }
 
-
-
-        stage('Criar Arquivo de Credenciais') {
+        stage('Create Credentials File') {
             steps {
                 withCredentials([
                     string(credentialsId: 'AWS_KEY', variable: 'AWS_KEY_VALUE'),
@@ -53,7 +51,7 @@ pipeline {
             }
         }
 
-        stage('Criação ou Atualização da Infraestrutura') {
+        stage('Create or Update Infrastructure') {
             steps {
                 script {
                     dir(env.ENV == 'PROD' ? 'infra/aws/env/prod/' : 'infra/aws/env/dev/') {
@@ -65,7 +63,7 @@ pipeline {
             }
         }
 
-        stage('Executando Ansible') {
+        stage('Run Ansible') {
             steps {
                 script {
                     dir('infra/aws/env/dev/') {
@@ -83,12 +81,12 @@ pipeline {
         stage('Wait') {
             steps {
                 script {
-                    sleep(time: 300, unit: 'SECONDS')
+                    sleep(time: 600, unit: 'SECONDS')
                 }
             }
         }
 
-        stage('Destruir Infraestrutura') {
+        stage('Destroy Infrastructure') {
             when {
                 not {
                     expression {

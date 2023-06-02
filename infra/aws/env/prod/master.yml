@@ -42,10 +42,14 @@
       hosts: web-server
       become: yes
 
-      tasks:
-        - name: Parar processos Java
-          command: pkill java
-          ignore_errors: yes
+
+- name: Iniciando o Docekr
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Parar processos Java
+      command: pkill java
+      ignore_errors: yes
 
         - name: Remover diretório 'api'
           command: rm -rf api
@@ -71,8 +75,4 @@
           args:
             chdir: api
 
-        - name: Executar o app
-          command: nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 && disown
-          args:
-            chdir: api
 

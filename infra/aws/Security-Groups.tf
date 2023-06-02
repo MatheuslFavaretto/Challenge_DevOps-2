@@ -29,8 +29,16 @@ resource "aws_security_group" "sg-prod" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    from_port        = 8000
-    to_port          = 8000
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    from_port        = 22
+    to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]

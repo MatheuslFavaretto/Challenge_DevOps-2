@@ -71,12 +71,14 @@
         chdir: api
 
     - name: permissão para o run.sh
-      command: chmod +X run.sh
+      command: chmod +x run.sh
+      become: yes
       args:
         chdir: api
 
     - name: executar run.sh
       command: ./run.sh
+      become: yes
       args:
         chdir: api
 

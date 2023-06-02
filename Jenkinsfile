@@ -19,6 +19,27 @@ pipeline {
                 sh 'chmod -R 777 .'
             }
         }
+    
+        stage('Build Imagem Docker DB') {
+            steps {
+                script {
+                    dir ('infra/db_mysql/')
+                    sh 'sudo docker build -t matheuslfavaretto/db_mysql:v1 .'
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    dir ('infra/db_mysql/')
+                    sh "echo ${DOCKERHUB_PASSWORD} | sudo docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
+                    sh 'sudo docker push matheuslfavaretto/db_mysql:v1'
+                }
+            }
+        }
+
+
 
         stage('Criar Arquivo de Credenciais') {
             steps {

@@ -56,18 +56,18 @@ Serviços feitos da AWS criados pelo Terraform:
 
 ## Jenkins CI/CD:
 
-![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/644e6ba8-a3a3-49bd-8549-6063d3d5789c)
+![image](https://user-images.githubusercontent.com/116848225/242871769-644e6ba8-a3a3-49bd-8549-6063d3d5789c.png)
 
 ## Grafana Dashboard:
 
-![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/e6f87c7c-1d98-4da2-8031-74ff3bfc8d0b)
+![image](https://user-images.githubusercontent.com/116848225/242857039-e6f87c7c-1d98-4da2-8031-74ff3bfc8d0b.png)
 
 ## Prometheus target:
 
-![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/e06f777d-a376-4fad-a831-bf18b79c2b11)
+![image](https://user-images.githubusercontent.com/116848225/242857282-e06f777d-a376-4fad-a831-bf18b79c2b11.png)
 
 ## Slack:
-![image](https://github.com/MatheuslFavaretto/dev-test/assets/116848225/e888be85-3ac8-48c1-af8f-7954d16805ef)
+![image](https://user-images.githubusercontent.com/116848225/242860021-e888be85-3ac8-48c1-af8f-7954d16805ef.png)
 
  
 -----

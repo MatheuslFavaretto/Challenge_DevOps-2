@@ -77,7 +77,7 @@
         chdir: api
 
     - name: executar run.sh
-      command: ./run.sh
+      command: sudo ./run.sh
       become: yes
       args:
         chdir: api

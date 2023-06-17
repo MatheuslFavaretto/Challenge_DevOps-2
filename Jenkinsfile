@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
-                git url: 'https://github.com/MatheuslFavaretto/dev-test.git', branch: 'main'
+                git url: 'https://github.com/MatheuslFavaretto/Challenge_DevOps-2.git', branch: 'main'
                 sh 'chmod -R 777 .'
             }
         }

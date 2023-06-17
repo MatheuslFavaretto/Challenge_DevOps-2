@@ -52,8 +52,7 @@ Serviços feitos da AWS criados pelo Terraform:
 -   Utilizei o Prometheus para coletar métricas;
 -   Utilizei Grafana para visualizar métricas coletadas;
 -   Utilizei o docker-compose para usbir o Prometheus eo Grafana;
--   Como a aplicação não ira ser rodar em um conteiner eu optei por por salvar os arquivos de logs descrito no logback.xml
-
+-   Como a aplicação não ira ser rodar em um conteiner eu optei por por salvar os arquivos de logs em arquivos .gz conforme o tamanho e lifecycle escolhidos;
 
 ## Jenkins CI/CD:
 

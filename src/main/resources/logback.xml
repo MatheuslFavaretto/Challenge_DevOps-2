@@ -26,4 +26,4 @@
         <appender-ref ref="FILE" />
     </root>
      
-</configuration>x
+</configuration>

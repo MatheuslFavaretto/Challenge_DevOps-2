@@ -52,7 +52,7 @@
 
     - name: Clonar repositório do GitHub
       git:
-        repo: https://github.com/MatheuslFavaretto/dev-test.git
+        repo: https://github.com/MatheuslFavaretto/Challenge_DevOps-2
         dest: api
         version: main
       register: git_output

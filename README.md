@@ -12,7 +12,7 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 | :fire: Desafio     | [Challenge DevOps 2]([https://](https://www.alura.com.br/challenges/devops-2))
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![Simbolo do infinito com processos DevOps](https://img.mandic.com.br/2018/06/Devops-o-que-e-DevOps-significado.png?rel=outbound#vitrinedev)
+![Simbolo do infinito com processos DevOps](https://img.mandic.com.br/2018/06/Devops-o-que-e-DevOps-significado.png?rel=outbound#vitrinedev#vitrinedev)
 
 ## 📃 Detalhes do projeto
 

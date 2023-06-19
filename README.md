@@ -25,9 +25,9 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 
 ## ⚙️ Funcionalidades
 
-- Semana 1      [X] Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
-- Semana 2      [X] Rotina CI/CD com Jenkins;
-- Semana 3/4    [X] Monitoramento e SRE do sistema em produção;
+- [x] Semana 1 Familiarizando com a aplicação, criando infra aws com terraform e testando a applicação;
+- [x] Semana 2 Rotina CI/CD com Jenkins;
+- [x] Semana 3/4 Monitoramento e SRE do sistema em produção;
 
 
 ### Semana 1 IaC
@@ -42,17 +42,17 @@ Serviços feitos da AWS criados pelo Terraform:
 ### Semana 2 CI/CD
 
 -   Criado Pipeline de CI/CD com Jenkins;  
--   Realizado create e push da imagem DB_mysql para o dockerhub
+-   Realizado create e push da imagem DB_mysql para o DockerHub
 -   Realizar rotina de testes já presentes na API;
 
 
 ### Semana 3 e 4 Monitoramento e SRE  
 
--   Implementei as devidqas configuraçoes de monitoramento no codigo;  
 -   Utilizei o Prometheus para coletar métricas;
 -   Utilizei Grafana para visualizar métricas coletadas;
--   Utilizei o docker-compose para usbir o Prometheus eo Grafana;
+-   Utilizei o docker-compose para subir o Prometheus eo Grafana;
 -   Como a aplicação não ira ser rodar em um conteiner eu optei por por salvar os arquivos de logs em arquivos .gz conforme o tamanho e lifecycle escolhidos;
+
 
 ## Jenkins CI/CD:
 

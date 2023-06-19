@@ -1,13 +1,13 @@
-## 💻 Sobre o projeto
+# 💻 Sobre o projeto
 
 Fazer o deploy de uma aplicação através de uma maquina virtual.
 
 Para realizar o deploy da aplicação será usado uma aplicação já existente, precisaremos criar uma maquina virtual para a aplicação, colocar o código da aplicação em um repositório, vamos automatizar o processo de testes e deploy usando rotinas de CI e CD. Por fim vamos coletar métricas da aplicação usando ferramentas de SRE.
 
-| 🪟 Vitrine.Dev |     |
+| :placard: Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | **Challenge DevOps**
-| 💻 Tecnologias | Java, Terraform, Jenkins, AWS, Docker, Ansible e Slack 
+| :label: Tecnologias | Java, Terraform, Jenkins, AWS, Docker, Ansible e Slack 
 | :rocket: URL         |
 | :fire: Desafio     | [Challenge DevOps 2]([https://](https://www.alura.com.br/challenges/devops-2))
 

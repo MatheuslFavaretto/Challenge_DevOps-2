@@ -1,11 +1,13 @@
 package med.voll.api.domain.medico;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
     Page<Medico> findAllByAtivoTrue(Pageable paginacao);
@@ -14,7 +16,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     @Query("""
             select m from Medico m
             where
-            m.ativo = 1
+            m.ativo = true
             and
             m.especialidade = :especialidade
             and
@@ -25,10 +27,13 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
                 and
                 c.motivoCancelamento is null
             )
-            order by rand()
-            limit 1
         """)
-    Medico escolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime data);
+    List<Medico> escolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime data, Pageable pageable);
+
+    default Medico escolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime data) {
+        var pageable = PageRequest.of(0, 1);
+        return escolherMedicoAleatorioLivreNaData(especialidade, data, pageable).stream().findFirst().orElse(null);
+    }
 
     @Query("""
             select m.ativo
